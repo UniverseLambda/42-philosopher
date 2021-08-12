@@ -32,7 +32,7 @@ static t_bool	check_params_format(int param_count, char *params[])
 		j = 0;
 		while (params[i][j])
 		{
-			if (params[i][j] < '0' || params[i][j] > '0')
+			if (params[i][j] < '0' || params[i][j] > '9')
 				return (FALSE);
 			++j;
 		}
@@ -86,7 +86,7 @@ t_ld_result	ld_conf(int argc, char *argv[])
 
 	--argc;
 	++argv;
-	conf.required_eat_count = 0;
+	conf.rec_defined = (argc == 5);
 	if (argc < 4)
 		return (ret_err("Missing parameter(s)"));
 	if (argc > 5)

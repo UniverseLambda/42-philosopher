@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bool.h                                             :+:      :+:    :+:   */
+/*   ph_allocator.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clsaad <clsaad@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/10 13:25:15 by clsaad            #+#    #+#             */
-/*   Updated: 2021/08/10 13:25:16 by clsaad           ###   ########lyon.fr   */
+/*   Created: 2021/08/12 13:36:09 by clsaad            #+#    #+#             */
+/*   Updated: 2021/08/12 13:36:09 by clsaad           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BOOL_H
-# define BOOL_H
+#ifndef ALLOCATOR_H
+# define ALLOCATOR_H
 
-typedef int	t_bool;
+# include <bool.h>
+# include <stddef.h>
 
-# define FALSE 0
-# define TRUE 1
+typedef	void (*t_destructor)(void *);
 
-#endif // BOOL_H
+void	*ph_alloc(size_t count, size_t size);
+void	*ph_alloc_obj(size_t count, size_t size, t_destructor destructor);
+
+void	ph_freemem();
+
+#endif // ALLOCATOR_H

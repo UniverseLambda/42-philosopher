@@ -24,6 +24,7 @@ typedef struct s_conf
 	uint64_t	starvation_delay;
 	uint64_t	eating_duration;
 	uint64_t	sleeping_duration;
+	t_bool		rec_defined;
 	uint64_t	required_eat_count;
 }				t_conf;
 
