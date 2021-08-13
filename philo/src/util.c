@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_fork.h                                       :+:      :+:    :+:   */
+/*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clsaad <clsaad@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/10 10:16:13 by clsaad            #+#    #+#             */
-/*   Updated: 2021/08/10 10:16:14 by clsaad           ###   ########lyon.fr   */
+/*   Created: 2021/08/13 13:54:29 by clsaad            #+#    #+#             */
+/*   Updated: 2021/08/13 13:54:30 by clsaad           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_FORK_H
-# define PHILO_FORK_H
+#include <util.h>
 
-# include <pthread.h>
-# include <bool.h>
+#include <stddef.h>
+#include <sys/time.h>
 
-typedef struct s_fork
+uint64_t	current_time_ms(uint64_t start)
 {
-	pthread_mutex_t	mutex;
-	t_bool			valid;
-}				t_fork;
+	struct timeval	tv;
+	uint64_t		result;
 
-t_fork	*new_fork(void);
-void	delete_fork(t_fork *fork);
-void	acquire_fork(t_fork *fork);
-void	release_fork(t_fork *fork);
+	gettimeofday(&tv, NULL);
+	result = tv.tv_sec * 1000;
+	result += tv.tv_usec / 1000;
+	if (start != (size_t)(-1))
+		result -= start;
+	return (result);
+}
 
-#endif // PHILO_FORK_H

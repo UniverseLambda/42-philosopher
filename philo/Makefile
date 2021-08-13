@@ -5,13 +5,15 @@ CC := gcc
 LD := gcc
 
 CFLAGS := -g -Wall -Wextra -Werror -Iinc -fsanitize=address
-LDFLAGS := -g -fsanitize=address
+LDFLAGS := -g -fsanitize=address -pthread
 
 NAME := philo
 
 SRCS := src/main.c \
 		src/conf.c \
+		src/philo.c \
 		src/ph_allocator.c \
+		src/util.c \
 
 INCS :=
 

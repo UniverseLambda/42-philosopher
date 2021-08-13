@@ -75,13 +75,14 @@ void	ph_freemem()
 	t_alloc_header	*next;
 
 	current = (*first_obj());
-	next = NULL;
-	while (current != NULL && next != NULL)
+	next = (void *)0xDEADBEEF;
+	while (current != NULL)
 	{
 		next = current->next;
 		if (current->destructor != NULL)
 			current->destructor(current + 1);
 		free(current);
+		current = next;
 	}
 	*first_obj() = NULL;
 }

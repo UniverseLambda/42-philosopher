@@ -14,13 +14,21 @@
 # define PHILO_H
 
 # include "philo_fork.h"
+# include "state.h"
+
+# include <stdint.h>
 
 typedef struct s_philo
 {
+	t_state		*state;
+	size_t		philo_id;
 	pthread_t	thread;
 
 	t_fork		*left_fork;
 	t_fork		*right_fork;
+	t_bool		has_died;
 }				t_philo;
+
+void	*philo_main(void *philo_ptr);
 
 #endif // PHILO_H

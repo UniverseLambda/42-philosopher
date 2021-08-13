@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_fork.h                                       :+:      :+:    :+:   */
+/*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clsaad <clsaad@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/10 10:16:13 by clsaad            #+#    #+#             */
-/*   Updated: 2021/08/10 10:16:14 by clsaad           ###   ########lyon.fr   */
+/*   Created: 2021/08/13 13:54:29 by clsaad            #+#    #+#             */
+/*   Updated: 2021/08/13 13:54:30 by clsaad           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_FORK_H
-# define PHILO_FORK_H
+#ifndef UTILS_H
+# define UTILS_H
 
-# include <pthread.h>
-# include <bool.h>
+# include <stdint.h>
 
-typedef struct s_fork
-{
-	pthread_mutex_t	mutex;
-	t_bool			valid;
-}				t_fork;
+uint64_t	current_time_ms(uint64_t start);
 
-t_fork	*new_fork(void);
-void	delete_fork(t_fork *fork);
-void	acquire_fork(t_fork *fork);
-void	release_fork(t_fork *fork);
-
-#endif // PHILO_FORK_H
+#endif // UTILS_H
