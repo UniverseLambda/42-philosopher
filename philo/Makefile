@@ -13,7 +13,8 @@ SRCS := src/main.c \
 		src/conf.c \
 		src/philo.c \
 		src/ph_allocator.c \
-		src/util.c \
+		src/philo_fork.c \
+		src/utils.c \
 
 INCS :=
 

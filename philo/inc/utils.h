@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clsaad <clsaad@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,21 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <util.h>
+#ifndef UTILS_H
+# define UTILS_H
 
-#include <stddef.h>
-#include <sys/time.h>
+# include <stdint.h>
+# include "philo.h"
 
-uint64_t	current_time_ms(uint64_t start)
-{
-	struct timeval	tv;
-	uint64_t		result;
+uint64_t	current_time_ms(uint64_t start);
+void		philo_print(t_philo *philo, const char *msg);
 
-	gettimeofday(&tv, NULL);
-	result = tv.tv_sec * 1000;
-	result += tv.tv_usec / 1000;
-	if (start != (size_t)(-1))
-		result -= start;
-	return (result);
-}
-
+#endif // UTILS_H
