@@ -89,6 +89,8 @@ static t_bool	exec_conf(t_conf conf)
 	state.ready = FALSE;
 	state.philo_count = conf.philosopher_count;
 	state.conf = conf;
+	if (pthread_mutex_init(&(state.time_lock), NULL) != 0)
+		return (FALSE);
 	state.philos = ph_alloc(state.philo_count, sizeof(t_philo));
 	state.should_stop = FALSE;
 	if (state.philos == NULL)
@@ -112,6 +114,7 @@ static t_bool	exec_conf(t_conf conf)
 			++i;
 		}
 	}
+	pthread_mutex_destroy(&(state.time_lock));
 	return (TRUE);
 }
 

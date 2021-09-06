@@ -5,7 +5,7 @@ CC := gcc
 LD := gcc
 
 CFLAGS := -g -Wall -Wextra -Werror -Iinc -fsanitize=address
-LDFLAGS := -g -fsanitize=address -pthread
+LDFLAGS := -g -pthread -fsanitize=address
 
 NAME := philo
 

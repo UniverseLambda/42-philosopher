@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <philo.h>
 #include <utils.h>
 
 #include <stddef.h>
@@ -18,6 +19,16 @@
 #include <stdint.h>
 
 #include <stdio.h>
+
+uint64_t	safe_current_time_ms(t_state *state)
+{
+	uint64_t	result;
+
+	pthread_mutex_lock(&(state->time_lock));
+	result = current_time_ms(state->start_time);
+	pthread_mutex_unlock(&(state->time_lock));
+	return (result);
+}
 
 uint64_t	current_time_ms(uint64_t start)
 {
@@ -39,5 +50,5 @@ void	philo_print(t_philo *philo, const char *msg)
 {
 	if (philo->state->should_stop)
 		return ;
-	printf("%lu %zu %s\n", current_time_ms(philo->state->start_time), philo->philo_id, msg);
+	printf("%lu %zu %s\n", safe_current_time_ms(philo->state), philo->philo_id, msg);
 }
