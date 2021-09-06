@@ -65,15 +65,6 @@ static t_ld_result	check_semantic(t_conf conf)
 {
 	t_ld_result result;
 
-	if (conf.sleeping_duration > conf.starvation_delay)
-		return (
-			ret_err("time_to_sleep greater than time_to_die "
-				"(systematically dies during sleeps)")
-		);
-	if (conf.sleeping_duration == conf.starvation_delay)
-		return (
-			ret_err("time_to_sleep equals to time_to_die (no time to think)")
-		);
 	result.ok = TRUE;
 	result.err_message = NULL;
 	result.conf = conf;

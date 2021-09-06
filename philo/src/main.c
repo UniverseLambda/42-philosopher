@@ -130,12 +130,12 @@ int	main(int argc, char *argv[])
 		return (1);
 	}
 
-	printf("philosopher_count:  %llu\n", result.conf.philosopher_count);
-	printf("starvation_delay:   %llu\n", result.conf.starvation_delay);
-	printf("eating_duration:    %llu\n", result.conf.eating_duration);
-	printf("sleeping_duration:  %llu\n", result.conf.sleeping_duration);
+	printf("philosopher_count:  %lu\n", result.conf.philosopher_count);
+	printf("starvation_delay:   %lu\n", result.conf.starvation_delay);
+	printf("eating_duration:    %lu\n", result.conf.eating_duration);
+	printf("sleeping_duration:  %lu\n", result.conf.sleeping_duration);
 	printf("rec_defined:        %s\n", (result.conf.rec_defined)? "true": "false");
-	printf("required_eat_count: %llu\n", result.conf.required_eat_count);
+	printf("required_eat_count: %lu\n", result.conf.required_eat_count);
 
 	ret = exec_conf(result.conf);
 	ph_freemem();

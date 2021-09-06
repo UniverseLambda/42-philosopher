@@ -15,6 +15,8 @@
 #include <stddef.h>
 #include <sys/time.h>
 
+#include <stdint.h>
+
 #include <stdio.h>
 
 uint64_t	current_time_ms(uint64_t start)
@@ -37,5 +39,5 @@ void	philo_print(t_philo *philo, const char *msg)
 {
 	if (philo->state->should_stop)
 		return ;
-	printf("%llu %zu %s\n", current_time_ms(philo->state->start_time), philo->philo_id, msg);
+	printf("%lu %zu %s\n", current_time_ms(philo->state->start_time), philo->philo_id, msg);
 }
