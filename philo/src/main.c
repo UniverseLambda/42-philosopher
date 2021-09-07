@@ -120,13 +120,14 @@ static t_bool	exec_conf(t_conf conf)
 				printf("%llu %zu died\n", current_time_ms(state.start_time), i + 1);
 				break ;
 			}
-			everyone_ate &= (state.philos[i].meal_count == state.conf.required_eat_count) && state.conf.rec_defined;
+			everyone_ate &= (state.philos[i].meal_count >= state.conf.required_eat_count) && state.conf.rec_defined;
 			pthread_mutex_unlock(&(state.philos[i].meal_lock));
 			++i;
 		}
 		if (i != state.philo_count)
 			break ;
 	}
+	pthread_mutex_lock(&(state.speak_lock));
 	return (TRUE);
 }
 
