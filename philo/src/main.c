@@ -55,9 +55,16 @@ static t_bool here_come_the_philos(t_state *state)
 	{
 		state->philos[i].philo_id = i + 1;
 		state->philos[i].state = state;
-		state->philos[i].has_died = FALSE;
 		state->philos[i].last_meal = 0;
-		state->philos[i].terminated = FALSE;
+		state->philos[i].start_time = state->start_time;
+		state->philos[i].can_die = TRUE;
+		if (pthread_mutex_init(&(state->philos[i].meal_lock), NULL) != 0)
+			return (FALSE);
+		++i;
+	}
+	i = 0;
+	while (i < state->philo_count)
+	{
 		if (pthread_create(&(state->philos[i].thread), NULL, philo_main, &(state->philos[i])) != 0)
 			return (FALSE);
 		if (pthread_detach(state->philos[i].thread) != 0)
@@ -67,11 +74,6 @@ static t_bool here_come_the_philos(t_state *state)
 	i = 1;
 	while (i < state->philo_count)
 	{
-		state->philos[i].philo_id = i + 1;
-		state->philos[i].state = state;
-		state->philos[i].has_died = FALSE;
-		state->philos[i].last_meal = 0;
-		state->philos[i].terminated = FALSE;
 		if (pthread_create(&(state->philos[i].thread), NULL, philo_main, &(state->philos[i])) != 0)
 			return (FALSE);
 		if (pthread_detach(state->philos[i].thread) != 0)
@@ -89,10 +91,9 @@ static t_bool	exec_conf(t_conf conf)
 	state.ready = FALSE;
 	state.philo_count = conf.philosopher_count;
 	state.conf = conf;
-	if (pthread_mutex_init(&(state.time_lock), NULL) != 0)
+	if (pthread_mutex_init(&(state.speak_lock), NULL) != 0)
 		return (FALSE);
 	state.philos = ph_alloc(state.philo_count, sizeof(t_philo));
-	state.should_stop = FALSE;
 	if (state.philos == NULL)
 		return (FALSE);
 	if (!init_forks(&state))
@@ -100,21 +101,25 @@ static t_bool	exec_conf(t_conf conf)
 	if (!here_come_the_philos(&state))
 		return (FALSE);
 	state.ready = TRUE;
-	while (!(state.should_stop))
+	while (1)
 	{
 		i = 0;
 		while (i < state.philo_count)
 		{
-			if (state.philos[i].has_died)
+			pthread_mutex_lock(&(state.philos[i].meal_lock));
+			if (state.philos[i].can_die
+				&& state.philos[i].last_meal - current_time_ms(state.start_time) >= conf.starvation_delay)
 			{
-				state.should_stop = TRUE;
+				pthread_mutex_unlock(&(state.philos[i].meal_lock));
+				pthread_mutex_lock(&(state.speak_lock));
+				printf("%llu %zu died\n", current_time_ms(state.start_time), i + 1);
 				break ;
 			}
-			asm volatile("pause" ::: "memory");
 			++i;
 		}
+		if (i != state.philo_count)
+			break ;
 	}
-	pthread_mutex_destroy(&(state.time_lock));
 	return (TRUE);
 }
 
@@ -133,12 +138,12 @@ int	main(int argc, char *argv[])
 		return (1);
 	}
 
-	printf("philosopher_count:  %lu\n", result.conf.philosopher_count);
-	printf("starvation_delay:   %lu\n", result.conf.starvation_delay);
-	printf("eating_duration:    %lu\n", result.conf.eating_duration);
-	printf("sleeping_duration:  %lu\n", result.conf.sleeping_duration);
+	printf("philosopher_count:  %llu\n", result.conf.philosopher_count);
+	printf("starvation_delay:   %llu\n", result.conf.starvation_delay);
+	printf("eating_duration:    %llu\n", result.conf.eating_duration);
+	printf("sleeping_duration:  %llu\n", result.conf.sleeping_duration);
 	printf("rec_defined:        %s\n", (result.conf.rec_defined)? "true": "false");
-	printf("required_eat_count: %lu\n", result.conf.required_eat_count);
+	printf("required_eat_count: %llu\n", result.conf.required_eat_count);
 
 	ret = exec_conf(result.conf);
 	ph_freemem();

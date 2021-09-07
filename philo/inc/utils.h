@@ -16,7 +16,6 @@
 # include <stdint.h>
 # include "philo.h"
 
-uint64_t	safe_current_time_ms(t_state *state);
 uint64_t	current_time_ms(uint64_t start);
 void		philo_print(t_philo *philo, const char *msg);
 

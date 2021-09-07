@@ -18,6 +18,8 @@
 
 # include "conf.h"
 
+# include <pthread.h>
+
 typedef struct s_philo t_philo;
 
 typedef struct s_state
@@ -26,9 +28,8 @@ typedef struct s_state
 	size_t			philo_count;
 	t_bool			ready;
 	t_conf			conf;
-	t_bool			should_stop;
 	uint64_t		start_time;
-	pthread_mutex_t	time_lock;
+	pthread_mutex_t	speak_lock;
 }				t_state;
 
 #endif // STATE_H

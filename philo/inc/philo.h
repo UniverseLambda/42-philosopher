@@ -20,15 +20,17 @@
 
 typedef struct s_philo
 {
-	t_state		*state;
-	size_t		philo_id;
-	pthread_t	thread;
+	t_state			*state;
+	size_t			philo_id;
+	pthread_t		thread;
 
-	t_fork		*left_fork;
-	t_fork		*right_fork;
-	t_bool		has_died;
-	t_bool		terminated;
-	uint64_t	last_meal;
+	t_fork			*left_fork;
+	t_fork			*right_fork;
+	t_bool			can_die;
+	uint64_t		last_meal;
+	uint64_t		start_time;
+
+	pthread_mutex_t	meal_lock;
 }				t_philo;
 
 void	*philo_main(void *philo_ptr);
