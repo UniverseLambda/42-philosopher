@@ -37,4 +37,4 @@ typedef struct s_ld_result
 
 t_ld_result	ld_conf(int argc, char *argv[]);
 
-#endif // CONF_H
+#endif

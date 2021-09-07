@@ -45,7 +45,7 @@ static t_bool	init_forks(t_state *state)
 	return (TRUE);
 }
 
-static t_bool here_come_the_philos(t_state *state)
+static t_bool	here_come_the_philos(t_state *state)
 {
 	size_t	i;
 
@@ -58,6 +58,7 @@ static t_bool here_come_the_philos(t_state *state)
 		state->philos[i].last_meal = 0;
 		state->philos[i].start_time = state->start_time;
 		state->philos[i].can_die = TRUE;
+		state->philos[i].meal_count = 0;
 		if (pthread_mutex_init(&(state->philos[i].meal_lock), NULL) != 0)
 			return (FALSE);
 		++i;
@@ -87,10 +88,12 @@ static t_bool	exec_conf(t_conf conf)
 {
 	t_state	state;
 	size_t	i;
+	t_bool	everyone_ate;
 
 	state.ready = FALSE;
 	state.philo_count = conf.philosopher_count;
 	state.conf = conf;
+	everyone_ate = FALSE;
 	if (pthread_mutex_init(&(state.speak_lock), NULL) != 0)
 		return (FALSE);
 	state.philos = ph_alloc(state.philo_count, sizeof(t_philo));
@@ -101,21 +104,23 @@ static t_bool	exec_conf(t_conf conf)
 	if (!here_come_the_philos(&state))
 		return (FALSE);
 	state.ready = TRUE;
-	while (1)
+	while (!everyone_ate)
 	{
 		i = 0;
+		everyone_ate = TRUE;
 		while (i < state.philo_count)
 		{
 			pthread_mutex_lock(&(state.philos[i].meal_lock));
 			if (state.philos[i].can_die
-				&& current_time_ms(state.start_time) - state.philos[i].last_meal >= conf.starvation_delay)
+				&& current_time_ms(state.start_time) - state.philos[i].last_meal
+					>= conf.starvation_delay)
 			{
 				pthread_mutex_lock(&(state.speak_lock));
-
 				pthread_mutex_unlock(&(state.philos[i].meal_lock));
 				printf("%llu %zu died\n", current_time_ms(state.start_time), i + 1);
 				break ;
 			}
+			everyone_ate &= (state.philos[i].meal_count == state.conf.required_eat_count) && state.conf.rec_defined;
 			pthread_mutex_unlock(&(state.philos[i].meal_lock));
 			++i;
 		}
@@ -139,14 +144,6 @@ int	main(int argc, char *argv[])
 			printf("An unknown error occured\n");
 		return (1);
 	}
-
-	printf("philosopher_count:  %llu\n", result.conf.philosopher_count);
-	printf("starvation_delay:   %llu\n", result.conf.starvation_delay);
-	printf("eating_duration:    %llu\n", result.conf.eating_duration);
-	printf("sleeping_duration:  %llu\n", result.conf.sleeping_duration);
-	printf("rec_defined:        %s\n", (result.conf.rec_defined)? "true": "false");
-	printf("required_eat_count: %llu\n", result.conf.required_eat_count);
-
 	ret = exec_conf(result.conf);
 	ph_freemem();
 	if (!ret)

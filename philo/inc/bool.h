@@ -18,4 +18,4 @@ typedef int	t_bool;
 # define FALSE 0
 # define TRUE 1
 
-#endif // BOOL_H
+#endif

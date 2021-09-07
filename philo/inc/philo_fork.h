@@ -27,4 +27,4 @@ void	delete_fork(void *vfork);
 void	acquire_fork(t_fork *fork);
 void	release_fork(t_fork *fork);
 
-#endif // PHILO_FORK_H
+#endif

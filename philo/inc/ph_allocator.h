@@ -10,17 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ALLOCATOR_H
-# define ALLOCATOR_H
+#ifndef PH_ALLOCATOR_H
+# define PH_ALLOCATOR_H
 
 # include <bool.h>
 # include <stddef.h>
 
-typedef	void (*t_destructor)(void *);
+typedef void	(*t_destructor)(void *);
 
 void	*ph_alloc(size_t count, size_t size);
 void	*ph_alloc_obj(size_t count, size_t size, t_destructor destructor);
 
-void	ph_freemem();
+void	ph_freemem(void);
 
-#endif // ALLOCATOR_H
+#endif

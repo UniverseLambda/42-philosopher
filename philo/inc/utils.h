@@ -19,4 +19,4 @@
 uint64_t	current_time_ms(uint64_t start);
 void		philo_print(t_philo *philo, const char *msg);
 
-#endif // UTILS_H
+#endif

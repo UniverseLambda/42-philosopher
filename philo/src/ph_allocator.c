@@ -20,7 +20,7 @@ typedef struct s_alloc_header
 	struct s_alloc_header	*next;
 }				t_alloc_header;
 
-static t_alloc_header	**first_obj()
+static t_alloc_header	**first_obj(void)
 {
 	static t_alloc_header	*first_obj = NULL;
 
@@ -69,7 +69,7 @@ void	*ph_alloc_obj(size_t count, size_t size, t_destructor destructor)
 	return (header + 1);
 }
 
-void	ph_freemem()
+void	ph_freemem(void)
 {
 	t_alloc_header	*current;
 	t_alloc_header	*next;

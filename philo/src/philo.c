@@ -45,15 +45,17 @@ static void	eat(t_philo *this)
 	pthread_mutex_lock(&(this->meal_lock));
 	this->last_meal = current_time_ms(this->start_time);
 	this->can_die = TRUE;
+	++(this->meal_count);
 	pthread_mutex_unlock(&(this->meal_lock));
 	return (blackout(this));
 }
 
 void	*philo_main(void *philo_ptr)
 {
-	t_philo	*this = philo_ptr;
+	t_philo	*this;
 	t_bool	dead;
 
+	this = philo_ptr;
 	dead = FALSE;
 	if ((this->philo_id % 2) != 0)
 		eat(this);

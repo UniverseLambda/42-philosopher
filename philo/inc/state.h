@@ -20,7 +20,7 @@
 
 # include <pthread.h>
 
-typedef struct s_philo t_philo;
+typedef struct s_philo	t_philo;
 
 typedef struct s_state
 {
@@ -32,4 +32,4 @@ typedef struct s_state
 	pthread_mutex_t	speak_lock;
 }				t_state;
 
-#endif // STATE_H
+#endif

@@ -1,8 +1,8 @@
 .PHONY: all re clean fclean
 .DEFAULT: all
 
-CC := gcc
-LD := gcc
+CC := clang
+LD := clang
 
 CFLAGS := -g -Wall -Wextra -Werror -Iinc # -fsanitize=address
 LDFLAGS := -g -pthread # -fsanitize=address

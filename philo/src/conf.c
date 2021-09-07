@@ -63,7 +63,7 @@ static t_bool	parse_ms_to_us(const char *arg, uint64_t *result)
 
 static t_ld_result	check_semantic(t_conf conf)
 {
-	t_ld_result result;
+	t_ld_result	result;
 
 	result.ok = TRUE;
 	result.err_message = NULL;

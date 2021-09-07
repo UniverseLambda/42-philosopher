@@ -30,9 +30,11 @@ typedef struct s_philo
 	uint64_t		last_meal;
 	uint64_t		start_time;
 
+	size_t			meal_count;
+
 	pthread_mutex_t	meal_lock;
 }				t_philo;
 
 void	*philo_main(void *philo_ptr);
 
-#endif // PHILO_H
+#endif

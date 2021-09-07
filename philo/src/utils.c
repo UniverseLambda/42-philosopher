@@ -39,6 +39,7 @@ uint64_t	current_time_ms(uint64_t start)
 void	philo_print(t_philo *philo, const char *msg)
 {
 	pthread_mutex_lock(&(philo->state->speak_lock));
-	printf("%llu %zu %s\n", current_time_ms(philo->start_time), philo->philo_id, msg);
+	printf("%llu %zu %s\n",
+		current_time_ms(philo->start_time), philo->philo_id, msg);
 	pthread_mutex_unlock(&(philo->state->speak_lock));
 }
