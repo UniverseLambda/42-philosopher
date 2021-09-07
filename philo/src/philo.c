@@ -55,7 +55,6 @@ void	*philo_main(void *philo_ptr)
 	t_bool	dead;
 
 	dead = FALSE;
-	this->last_meal = this->state->start_time;
 	if ((this->philo_id % 2) != 0)
 		eat(this);
 	else

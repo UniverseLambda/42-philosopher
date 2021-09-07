@@ -108,13 +108,15 @@ static t_bool	exec_conf(t_conf conf)
 		{
 			pthread_mutex_lock(&(state.philos[i].meal_lock));
 			if (state.philos[i].can_die
-				&& state.philos[i].last_meal - current_time_ms(state.start_time) >= conf.starvation_delay)
+				&& current_time_ms(state.start_time) - state.philos[i].last_meal >= conf.starvation_delay)
 			{
-				pthread_mutex_unlock(&(state.philos[i].meal_lock));
 				pthread_mutex_lock(&(state.speak_lock));
+
+				pthread_mutex_unlock(&(state.philos[i].meal_lock));
 				printf("%llu %zu died\n", current_time_ms(state.start_time), i + 1);
 				break ;
 			}
+			pthread_mutex_unlock(&(state.philos[i].meal_lock));
 			++i;
 		}
 		if (i != state.philo_count)
