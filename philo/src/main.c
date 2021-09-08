@@ -44,6 +44,8 @@ static t_bool	init_forks(t_state *state)
 	}
 	if (state->philo_count > 1)
 		state->philos[0].left_fork = state->philos[i - 1].right_fork;
+	else
+		state->philos[0].left_fork = state->philos[0].right_fork;
 	return (TRUE);
 }
 
