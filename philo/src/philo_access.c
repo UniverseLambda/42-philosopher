@@ -39,6 +39,7 @@ void	inc_meal_count(t_philo *this)
 size_t	get_meal_count(t_philo *this)
 {
 	size_t	value;
+
 	pthread_mutex_lock(&(this->meal_count_lock));
 	value = this->meal_count;
 	pthread_mutex_unlock(&(this->meal_count_lock));

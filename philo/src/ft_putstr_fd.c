@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clsaad <clsaad@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/13 13:54:29 by clsaad            #+#    #+#             */
-/*   Updated: 2021/08/13 13:54:30 by clsaad           ###   ########lyon.fr   */
+/*   Created: 2020/11/26 09:58:34 by clsaad            #+#    #+#             */
+/*   Updated: 2020/11/26 09:58:35 by clsaad           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include <unistd.h>
 
-# include <stdint.h>
-# include "philo.h"
+void	ft_putstr_fd(const char *s, int fd)
+{
+	ssize_t	read_count;
+	ssize_t	length;
 
-uint64_t	current_time_ms(uint64_t start);
-void		philo_print(t_philo *philo, const char *msg);
-
-void		ft_putchar_fd(char c, int fd);
-void		ft_putstr_fd(const char *s, int fd);
-void		ft_putnbr_fd(uint64_t nb, int fd);
-
-#endif
+	length = 0;
+	while (s[length])
+		++length;
+	read_count = write(fd, s, length);
+	while (read_count != -1)
+	{
+		length -= read_count;
+		if (length <= 0)
+		{
+			return ;
+		}
+		read_count = write(fd, s, length);
+	}
+}

@@ -51,7 +51,8 @@ static void	blackout(t_philo *this)
 
 	philo_print(this, "is sleeping");
 	start = current_time_ms(this->start_time);
-	while (current_time_ms(this->start_time) - start < this->state->conf.sleeping_duration)
+	while (current_time_ms(this->start_time)
+		- start < this->state->conf.sleeping_duration)
 		usleep(100);
 	think(this);
 }
@@ -62,7 +63,8 @@ static void	eat(t_philo *this)
 
 	lock_forks(this);
 	start = current_time_ms(this->start_time);
-	while (current_time_ms(this->start_time) - start < this->state->conf.eating_duration)
+	while (current_time_ms(this->start_time)
+		- start < this->state->conf.eating_duration)
 		usleep(100);
 	pthread_mutex_unlock(&(this->left_fork->mutex));
 	pthread_mutex_unlock(&(this->right_fork->mutex));
@@ -76,10 +78,8 @@ void	*philo_main(void *philo_ptr)
 
 	this = philo_ptr;
 	dead = FALSE;
-	if ((this->philo_id % 2) != 0)
-		eat(this);
-	else
-		think(this);
+	if ((this->philo_id % 2) == 0)
+		blackout(this);
 	while (1)
 		eat(this);
 	return ((void *)0);

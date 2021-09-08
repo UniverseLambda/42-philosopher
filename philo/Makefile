@@ -4,8 +4,8 @@
 CC := clang
 LD := clang
 
-CFLAGS := -g3 -Wall -Wextra -Werror -Iinc -fno-omit-frame-pointer -O1 # -fsanitize=thread
-LDFLAGS := -g3 -pthread -fno-omit-frame-pointer -O1 # -fsanitize=thread
+CFLAGS := -g3 -Wall -Wextra -Werror -Iinc -fno-omit-frame-pointer # -fsanitize=thread
+LDFLAGS := -g3 -pthread -fno-omit-frame-pointer # -fsanitize=thread
 
 NAME := philo
 
@@ -16,9 +16,19 @@ SRCS := src/main.c \
 		src/ph_allocator.c \
 		src/philo_access.c \
 		src/philo_fork.c \
+		src/ft_putchar_fd.c \
+		src/ft_putstr_fd.c \
+		src/ft_putnbr_fd.c \
 		src/utils.c \
 
-INCS :=
+INCS :=	inc/bool.h \
+		inc/conf.h \
+		inc/corruption.h \
+		inc/ph_allocator.h \
+		inc/philo.h \
+		inc/philo_fork.h \
+		inc/state.h \
+		inc/utils.h \
 
 OBJS := $(SRCS:.c=.o)
 

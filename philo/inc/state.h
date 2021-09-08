@@ -26,9 +26,9 @@ typedef struct s_state
 {
 	t_philo			*philos;
 	size_t			philo_count;
-	t_bool			ready;
 	t_conf			conf;
 	uint64_t		start_time;
+	t_bool			stop;
 	pthread_mutex_t	speak_lock;
 }				t_state;
 
