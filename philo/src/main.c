@@ -89,8 +89,9 @@ static t_bool	exec_loop(t_state *state, t_conf *conf)
 			- get_last_meal(&(state->philos[i])) >= conf->starvation_delay)
 		{
 			state->stop = TRUE;
-			pthread_mutex_lock(&(state->speak_lock);
-			printf("%llu %zu died\n", current_time_ms(state->start_time), i + 1);
+			pthread_mutex_lock(&(state->speak_lock));
+			printf("%llu %zu died\n",
+				current_time_ms(state->start_time), i + 1);
 			return (FALSE);
 		}
 		everyone_ate &= (get_meal_count(&(state->philos[i]))
