@@ -4,15 +4,17 @@
 CC := clang
 LD := clang
 
-CFLAGS := -g -Wall -Wextra -Werror -Iinc # -fsanitize=address
-LDFLAGS := -g -pthread # -fsanitize=address
+CFLAGS := -g3 -Wall -Wextra -Werror -Iinc -fno-omit-frame-pointer -O1 -fsanitize=thread
+LDFLAGS := -g3 -pthread -fno-omit-frame-pointer -O1 -fsanitize=thread
 
 NAME := philo
 
 SRCS := src/main.c \
 		src/conf.c \
+		src/corruption.c \
 		src/philo.c \
 		src/ph_allocator.c \
+		src/philo_access.c \
 		src/philo_fork.c \
 		src/utils.c \
 

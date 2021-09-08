@@ -31,8 +31,6 @@ uint64_t	current_time_ms(uint64_t start)
 	result += tv.tv_usec / 1000;
 	if (start != (size_t)(-1))
 		result -= start;
-	else
-		puts("Hmmmmmm :thinking:");
 	return (result);
 }
 

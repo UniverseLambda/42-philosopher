@@ -26,7 +26,6 @@ typedef struct s_philo
 
 	t_fork			*left_fork;
 	t_fork			*right_fork;
-	t_bool			can_die;
 	uint64_t		last_meal;
 	uint64_t		start_time;
 
@@ -36,5 +35,8 @@ typedef struct s_philo
 }				t_philo;
 
 void	*philo_main(void *philo_ptr);
+
+int64_t	get_last_meal(t_philo *this);
+void	set_last_meal(t_philo *this, int64_t value);
 
 #endif

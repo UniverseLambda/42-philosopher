@@ -13,6 +13,8 @@
 #include <ph_allocator.h>
 #include <stdlib.h>
 
+#include <corruption.h>
+
 typedef struct s_alloc_header
 {
 	size_t					obj_size;
@@ -35,7 +37,7 @@ static t_alloc_header	*alloc(size_t count, size_t size)
 	if ((count * size) / size != count)
 		return (NULL);
 	parent = *(first_obj());
-	result = malloc(sizeof(t_alloc_header) + (count * size));
+	result = corr_malloc(sizeof(t_alloc_header) + (count * size));
 	if (result == NULL)
 		return (NULL);
 	result->destructor = NULL;
@@ -81,7 +83,7 @@ void	ph_freemem(void)
 		next = current->next;
 		if (current->destructor != NULL)
 			current->destructor(current + 1);
-		free(current);
+		corr_free(current);
 		current = next;
 	}
 	*first_obj() = NULL;

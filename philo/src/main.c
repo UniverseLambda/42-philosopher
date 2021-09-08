@@ -57,7 +57,6 @@ static t_bool	here_come_the_philos(t_state *state)
 		state->philos[i].state = state;
 		state->philos[i].last_meal = 0;
 		state->philos[i].start_time = state->start_time;
-		state->philos[i].can_die = TRUE;
 		state->philos[i].meal_count = 0;
 		if (pthread_mutex_init(&(state->philos[i].meal_lock), NULL) != 0)
 			return (FALSE);
@@ -97,11 +96,7 @@ static t_bool	exec_conf(t_conf conf)
 	if (pthread_mutex_init(&(state.speak_lock), NULL) != 0)
 		return (FALSE);
 	state.philos = ph_alloc(state.philo_count, sizeof(t_philo));
-	if (state.philos == NULL)
-		return (FALSE);
-	if (!init_forks(&state))
-		return (FALSE);
-	if (!here_come_the_philos(&state))
+	if (state.philos == NULL || !init_forks(&state) || !here_come_the_philos(&state))
 		return (FALSE);
 	state.ready = TRUE;
 	while (!everyone_ate)
@@ -110,18 +105,13 @@ static t_bool	exec_conf(t_conf conf)
 		everyone_ate = TRUE;
 		while (i < state.philo_count)
 		{
-			pthread_mutex_lock(&(state.philos[i].meal_lock));
-			if (state.philos[i].can_die
-				&& current_time_ms(state.start_time) - state.philos[i].last_meal
+			if (current_time_ms(state.start_time) - get_last_meal(&(state.philos[i]))
 					>= conf.starvation_delay)
 			{
-				pthread_mutex_lock(&(state.speak_lock));
-				pthread_mutex_unlock(&(state.philos[i].meal_lock));
 				printf("%llu %zu died\n", current_time_ms(state.start_time), i + 1);
 				break ;
 			}
 			everyone_ate &= (state.philos[i].meal_count >= state.conf.required_eat_count) && state.conf.rec_defined;
-			pthread_mutex_unlock(&(state.philos[i].meal_lock));
 			++i;
 		}
 		if (i != state.philo_count)
@@ -145,6 +135,8 @@ int	main(int argc, char *argv[])
 			printf("An unknown error occured\n");
 		return (1);
 	}
+	if (result.conf.rec_defined && result.conf.required_eat_count == 0)
+		return (0);
 	ret = exec_conf(result.conf);
 	ph_freemem();
 	if (!ret)
