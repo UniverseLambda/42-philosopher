@@ -19,6 +19,8 @@
 
 #include <stdio.h>
 
+#include <unistd.h>
+
 static t_bool	init_forks(t_state *state)
 {
 	size_t	i;
@@ -60,6 +62,8 @@ static t_bool	here_come_the_philos(t_state *state)
 		state->philos[i].meal_count = 0;
 		if (pthread_mutex_init(&(state->philos[i].meal_lock), NULL) != 0)
 			return (FALSE);
+		if (pthread_mutex_init(&(state->philos[i].meal_count_lock), NULL) != 0)
+			return (FALSE);
 		++i;
 	}
 	i = 0;
@@ -71,6 +75,7 @@ static t_bool	here_come_the_philos(t_state *state)
 			return (FALSE);
 		i += 2;
 	}
+	usleep(100);
 	i = 1;
 	while (i < state->philo_count)
 	{
@@ -109,7 +114,7 @@ static t_bool	exec_conf(t_conf conf)
 					>= conf.starvation_delay)
 			{
 				printf("%llu %zu died\n", current_time_ms(state.start_time), i + 1);
-				break ;
+				return (FALSE);
 			}
 			everyone_ate &= (get_meal_count(&(state.philos[i])) >= state.conf.required_eat_count);
 			++i;

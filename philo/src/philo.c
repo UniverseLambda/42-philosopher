@@ -33,9 +33,11 @@ static void	lock_forks(t_philo *this)
 		pthread_mutex_lock(&(this->right_fork->mutex));
 		philo_print(this, "has taken a fork");
 	}
-	set_last_meal(this, current_time_ms(this->start_time));
-	inc_meal_count(this);
+	pthread_mutex_lock(&(this->meal_lock));
+	this->last_meal = current_time_ms(this->start_time);
 	philo_print(this, "is eating");
+	pthread_mutex_unlock(&(this->meal_lock));
+	inc_meal_count(this);
 }
 
 static void	think(t_philo *this)
@@ -45,15 +47,23 @@ static void	think(t_philo *this)
 
 static void	blackout(t_philo *this)
 {
+	uint64_t	start;
+
 	philo_print(this, "is sleeping");
-	usleep(this->state->conf.sleeping_duration * 1000);
+	start = current_time_ms(this->start_time);
+	while (current_time_ms(this->start_time) - start < this->state->conf.sleeping_duration)
+		usleep(100);
 	think(this);
 }
 
 static void	eat(t_philo *this)
 {
+	uint64_t	start;
+
 	lock_forks(this);
-	usleep(this->state->conf.eating_duration * 1000);
+	start = current_time_ms(this->start_time);
+	while (current_time_ms(this->start_time) - start < this->state->conf.eating_duration)
+		usleep(100);
 	pthread_mutex_unlock(&(this->left_fork->mutex));
 	pthread_mutex_unlock(&(this->right_fork->mutex));
 	return (blackout(this));

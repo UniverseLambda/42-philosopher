@@ -32,6 +32,7 @@ typedef struct s_philo
 	size_t			meal_count;
 
 	pthread_mutex_t	meal_lock;
+	pthread_mutex_t	meal_count_lock;
 }				t_philo;
 
 void	*philo_main(void *philo_ptr);
