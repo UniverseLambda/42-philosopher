@@ -38,5 +38,7 @@ void	*philo_main(void *philo_ptr);
 
 int64_t	get_last_meal(t_philo *this);
 void	set_last_meal(t_philo *this, int64_t value);
+void	inc_meal_count(t_philo *this);
+size_t	get_meal_count(t_philo *this);
 
 #endif

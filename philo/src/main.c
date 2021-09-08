@@ -102,7 +102,7 @@ static t_bool	exec_conf(t_conf conf)
 	while (!everyone_ate)
 	{
 		i = 0;
-		everyone_ate = TRUE;
+		everyone_ate = state.conf.rec_defined;
 		while (i < state.philo_count)
 		{
 			if (current_time_ms(state.start_time) - get_last_meal(&(state.philos[i]))
@@ -111,7 +111,7 @@ static t_bool	exec_conf(t_conf conf)
 				printf("%llu %zu died\n", current_time_ms(state.start_time), i + 1);
 				break ;
 			}
-			everyone_ate &= (state.philos[i].meal_count >= state.conf.required_eat_count) && state.conf.rec_defined;
+			everyone_ate &= (get_meal_count(&(state.philos[i])) >= state.conf.required_eat_count);
 			++i;
 		}
 		if (i != state.philo_count)
