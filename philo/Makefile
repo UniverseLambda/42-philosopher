@@ -4,18 +4,15 @@
 CC := clang
 LD := clang
 
-COMMONFLAGS := -g3 -pthread
+COMMONFLAGS := -g3 -pthread -Wall -Wextra -Werror
 
-CFLAGS := $(COMMONFLAGS) -Wall -Wextra -Werror -Iinc # -fsanitize=undefined -fsanitize=thread -fstack-protector-all
-LDFLAGS :=  # -fsanitize=undefined -fsanitize=thread -fstack-protector-all
+CFLAGS := $(COMMONFLAGS) -Iinc
+LDFLAGS := $(COMMONFLAGS)
 
 NAME := philo
 
 SRCS :=	src/conf.c \
 		src/corruption.c \
-		src/ft_putchar_fd.c \
-		src/ft_putnbr_fd.c \
-		src/ft_putstr_fd.c \
 		src/main.c \
 		src/ph_allocator.c \
 		src/philo.c \

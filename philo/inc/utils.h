@@ -19,8 +19,4 @@
 uint64_t	current_time_ms(uint64_t start);
 void		philo_print(t_philo *philo, const char *msg);
 
-void		ft_putchar_fd(char c, int fd);
-void		ft_putstr_fd(const char *s, int fd);
-void		ft_putnbr_fd(uint64_t nb, int fd);
-
 #endif

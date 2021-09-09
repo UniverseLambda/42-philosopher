@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <ph_allocator.h>
-#include <stdlib.h>
 
 #include <corruption.h>
 

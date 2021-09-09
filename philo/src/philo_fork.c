@@ -20,22 +20,3 @@ t_bool	init_fork(t_fork *fork)
 		return (FALSE);
 	return (TRUE);
 }
-
-void	delete_fork(void *vfork)
-{
-	t_fork	*fork;
-
-	fork = vfork;
-	if (fork->valid)
-		pthread_mutex_destroy(&(fork->mutex));
-}
-
-void	acquire_fork(t_fork *fork)
-{
-	(void)fork;
-}
-
-void	release_fork(t_fork *fork)
-{
-	(void)fork;
-}

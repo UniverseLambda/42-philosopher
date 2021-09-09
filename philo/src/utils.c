@@ -13,7 +13,6 @@
 #include <philo.h>
 #include <utils.h>
 
-#include <stddef.h>
 #include <sys/time.h>
 
 #include <stdint.h>
