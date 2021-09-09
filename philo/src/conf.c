@@ -29,6 +29,8 @@ static t_bool	check_params_format(int param_count, char *params[])
 	i = 0;
 	while (i < param_count)
 	{
+		if (params[i][0] == 0)
+			return (FALSE);
 		j = 0;
 		while (params[i][j])
 		{
