@@ -82,8 +82,9 @@ static t_bool	exec_loop(t_state *state, t_conf *conf)
 	everyone_ate = conf->rec_defined;
 	while (i < state->philo_count)
 	{
+		pthread_mutex_lock(&(state->philos[i].meal_lock));
 		if (current_time_ms(state->start_time)
-			- get_last_meal(&(state->philos[i])) >= conf->starvation_delay)
+			- state->philos[i].last_meal >= conf->starvation_delay)
 		{
 			state->stop = TRUE;
 			pthread_mutex_lock(&(state->speak_lock));
@@ -91,6 +92,7 @@ static t_bool	exec_loop(t_state *state, t_conf *conf)
 				current_time_ms(state->start_time), i + 1);
 			return (FALSE);
 		}
+		pthread_mutex_unlock(&(state->philos[i].meal_lock));
 		everyone_ate &= (get_meal_count(&(state->philos[i]))
 				>= state->conf.required_eat_count);
 		++i;
