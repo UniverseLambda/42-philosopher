@@ -25,7 +25,7 @@ typedef struct s_philo
 	pthread_t		thread;
 
 	t_fork			*left_fork;
-	t_fork			*right_fork;
+	t_fork			right_fork;
 	uint64_t		last_meal;
 	uint64_t		start_time;
 

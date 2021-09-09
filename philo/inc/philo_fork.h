@@ -22,7 +22,7 @@ typedef struct s_fork
 	t_bool			valid;
 }				t_fork;
 
-t_fork	*new_fork(void);
+t_bool	init_fork(t_fork *fork);
 void	delete_fork(void *vfork);
 void	acquire_fork(t_fork *fork);
 void	release_fork(t_fork *fork);

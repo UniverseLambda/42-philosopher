@@ -19,20 +19,10 @@
 
 static void	lock_forks(t_philo *this)
 {
-	if ((this->philo_id % 2) != 0)
-	{
-		pthread_mutex_lock(&(this->left_fork->mutex));
-		philo_print(this, "has taken a fork");
-		pthread_mutex_lock(&(this->right_fork->mutex));
-		philo_print(this, "has taken a fork");
-	}
-	else
-	{
-		pthread_mutex_lock(&(this->left_fork->mutex));
-		philo_print(this, "has taken a fork");
-		pthread_mutex_lock(&(this->right_fork->mutex));
-		philo_print(this, "has taken a fork");
-	}
+	pthread_mutex_lock(&(this->left_fork->mutex));
+	philo_print(this, "has taken a fork");
+	pthread_mutex_lock(&(this->right_fork.mutex));
+	philo_print(this, "has taken a fork");
 	pthread_mutex_lock(&(this->meal_lock));
 	this->last_meal = current_time_ms(this->start_time);
 	philo_print(this, "is eating");
@@ -67,7 +57,7 @@ static void	eat(t_philo *this)
 		- start < this->state->conf.eating_duration)
 		usleep(100);
 	pthread_mutex_unlock(&(this->left_fork->mutex));
-	pthread_mutex_unlock(&(this->right_fork->mutex));
+	pthread_mutex_unlock(&(this->right_fork.mutex));
 	return (blackout(this));
 }
 

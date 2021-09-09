@@ -13,17 +13,12 @@
 #include <philo_fork.h>
 #include <ph_allocator.h>
 
-t_fork	*new_fork(void)
+t_bool	init_fork(t_fork *fork)
 {
-	t_fork	*fork;
-
-	fork = ph_alloc_obj(1, sizeof(t_fork), delete_fork);
-	if (fork == NULL)
-		return (NULL);
 	fork->valid = pthread_mutex_init(&(fork->mutex), NULL) == 0;
 	if (!fork->valid)
-		return (NULL);
-	return (fork);
+		return (FALSE);
+	return (TRUE);
 }
 
 void	delete_fork(void *vfork)

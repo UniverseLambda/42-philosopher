@@ -4,8 +4,8 @@
 CC := clang
 LD := clang
 
-CFLAGS := -g3 -Wall -Wextra -Werror -Iinc -fno-omit-frame-pointer # -fsanitize=thread
-LDFLAGS := -g3 -pthread -fno-omit-frame-pointer # -fsanitize=thread
+CFLAGS := -g3 -pthread -Wall -Wextra -Werror -Iinc -fno-omit-frame-pointer # -fsanitize=undefined -fsanitize=thread -fstack-protector-all
+LDFLAGS := -g3 -pthread -fno-omit-frame-pointer # -fsanitize=undefined -fsanitize=thread -fstack-protector-all
 
 NAME := philo
 

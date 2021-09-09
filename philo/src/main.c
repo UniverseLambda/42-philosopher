@@ -24,28 +24,25 @@
 static t_bool	init_forks(t_state *state)
 {
 	size_t	i;
-	t_fork	*fork;
 
 	i = -1;
 	state->philos[0].left_fork = NULL;
 	while (++i < state->philo_count)
 	{
-		fork = new_fork();
-		if (fork == NULL)
+		if (!init_fork(&(state->philos[i].right_fork)))
 			return (FALSE);
-		state->philos[i].right_fork = fork;
 		if (i > 0)
-			state->philos[i].left_fork = state->philos[i - 1].right_fork;
+			state->philos[i].left_fork = &(state->philos[i - 1].right_fork);
 		if (state->philo_count == 1 && state->philos[0].left_fork == NULL)
 		{
-			state->philos[i].left_fork = state->philos[i].right_fork;
+			state->philos[i].left_fork = &(state->philos[i - 1].right_fork);
 			--i;
 		}
 	}
 	if (state->philo_count > 1)
-		state->philos[0].left_fork = state->philos[i - 1].right_fork;
+		state->philos[0].left_fork = &(state->philos[i - 1].right_fork);
 	else
-		state->philos[0].left_fork = state->philos[0].right_fork;
+		state->philos[0].left_fork = &(state->philos[0].right_fork);
 	return (TRUE);
 }
 
